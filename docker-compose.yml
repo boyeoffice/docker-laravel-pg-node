@@ -1,0 +1,21 @@
+version: '3'
+
+networks:
+  laravel:
+  app-shared:
+    driver: bridge
+
+services:
+  dock:
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    container_name: nginx_dock
+    ports:
+      - "${NGINX_HOST_HTTP_PORT}:80"
+      - "${NGINX_HOST_HTTPS_PORT}:443"
+    volumes:
+    - ../:/var/www/html:delegated
+    networks:
+    - laravel
+    - app-shared
